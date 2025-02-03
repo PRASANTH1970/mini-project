@@ -1,0 +1,54 @@
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+struct book{
+    char Title[100];
+    char Author[50];
+    int id;
+};
+void Addbook(){
+    struct book b;
+    FILE*file=fopen("library.txt","ab");
+    if(!file){
+        printf("error opening file:\n");
+        return ;
+    }
+    printf("enter book id:\n");
+    scanf("%d",&b.id);
+     printf("enter title:\n");
+     scanf("%[^\n]",b.Title);
+      printf("enter Author:\n");
+      scanf("%[^\n]",b.Author);
+      fwrite(&b,sizeof (b),1,file);
+      fclose(file);
+      printf("book added successsfully:\n");
+}
+void displaybook(){
+    struct book b;
+    FILE*file=fopen("library.txt","rb");
+    if(!file){
+        printf("no books available!\n");
+        return;
+    }
+    printf("\nid\tTitle\tAuthor\n");
+    while(fread(&b,sizeof (b),1,file)){
+        printf("%d\t%s\t%s\n",b.id,b.Title,b.Author);
+    }
+    fclose(file);
+}
+int main(){
+    int choice;
+    while(1){
+        printf("\n1.Add book\n2.viewbook\n3.Exit\nenter choice:");
+        scanf("%d",&choice);
+        switch(choice){
+            case 1: Addbook();break;
+            case 2: displaybook();break;
+            case 3: exit(0);
+            default:printf("invalid choice!\n");
+        }
+    }
+    return 0;
+            
+        }
+    
